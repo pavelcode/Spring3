@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+   http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!-- IOC开始 -->
+	<!-- 定义一个对象bean -->
+	<!-- <bean id="student" class="com.cblue.spring01.ioc.Student"></bean> -->
+	<!-- 定义一个对象的别名 -->
+	<!-- <alias name="student" alias="mystudent"/> -->
+	<!-- 定义一个工厂静态方法 -->
+	<!-- <bean id="student_factory_staticmethod" class="com.cblue.spring01.ioc.StudentFactoryStaticMethod" 
+		factory-method="getInstance"></bean> -->
+	<!-- 定义一个工厂普通方法 -->
+	<!-- <bean id="student_factory" class="com.cblue.spring01.ioc.StudentFactoryMethod"></bean> 
+		<bean id="student02" factory-bean="student_factory" factory-method="createStudent"></bean> -->
+
+	<!-- 创建对象是单例还是多例 -->
+	<!-- 默认单例 -->
+	<!-- <bean id="user01" class="com.cblue.spring02.scope.User"></bean>
+	<bean id="user02" class="com.cblue.spring02.scope.User" scope="prototype"></bean> -->
+
+	<!-- 对象创建是否懒初始化 -->
+	<!-- <bean id="customer01" class="com.cblue.spring03.lazy.Customer"></bean> -->
+	<!-- <bean id="customer02" class="com.cblue.spring03.lazy.Customer"
+		lazy-init="true"></bean> -->
+
+
+	<!-- 对象的生命周期方法 -->
+	<!-- <bean id="computer" class="com.cblue.spring04.cyclelife.Computer" init-method="init" 
+		destroy-method="destory"></bean> -->
+	<!-- DI开始 -->
+	<!-- 通过setter设置属性 -->
+	<!-- <bean id="person01" class="com.cblue.spring05.di.Person">
+		<property name="name" value="zhangsan"></property>
+		<property name="age" value="20"></property>
+	</bean>  -->
+	<!-- 通过构造函数设置 -->
+	<!-- <bean id="person02" class="com.cblue.spring05.di.Person">
+		<constructor-arg value="lisi"></constructor-arg>
+		<constructor-arg value="12"></constructor-arg>
+	</bean> -->
+	<!-- 通过spel注入数据 -->
+	<bean id="person03" class="com.cblue.spring05.di.Person">
+		<property name="name" value="王五"></property>
+		<property name="age" value="30"></property>
+	</bean> 
+	
+	<bean id="person04" class="com.cblue.spring05.di.Person">
+		<property name="name" value="#{person03.name}"></property>
+		<property name="age" value="#{person03.age}"></property>
+	</bean>
+	
+
+	<!-- 复杂对象注入 -->
+	<bean id="department" class="com.cblue.spring05.di.Department">
+		<property name="did" value="01"></property>
+		<property name="dname" value="技术部"></property>
+		<property name="employee" ref="employee"></property>
+		 <property name="lists">  
+                    <list>  
+                        <value>list1</value>  
+                        <value>list2</value>  
+                        <ref bean="employee"/>  
+                    </list>  
+         </property>  
+         <property name="map">  
+                    <map>  
+                        <entry key="m1">  
+                            <value>map1</value>  
+                        </entry>  
+                        <entry key="map2">  
+                            <ref bean="employee"/>  
+                        </entry>  
+                    </map>  
+          </property>  
+	</bean>
+	
+	<bean id="employee" class="com.cblue.spring05.di.Employee">
+		<property name="eid" value="100"></property>
+		<property name="ename" value="张三"></property>
+	</bean>
+	
+	<!-- 使用di实现mvc -->
+	 <bean id="personDao" class="com.cblue.spring06.mvc.PersonDaoImpl"></bean>
+     <bean id="personService" class="com.cblue.spring06.mvc.PersonServiceImpl">
+        <property name="personDao">
+          <ref bean="personDao"/>
+        </property>
+     </bean>
+     <bean id="personAction" class="com.cblue.spring06.mvc.PersonAction">
+        <property name="personService">
+           <ref bean="personService"/>
+        </property>
+     </bean>
+	
+	
+</beans>
+
+

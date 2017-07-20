@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	
+    <!-- 使用annotation实现di -->
+	
+     <bean id="person" class="com.cblue.spring07.annotation.di.Person"></bean>
+     <bean id="student" class="com.cblue.spring07.annotation.di.Student"></bean>
+     
+	
+</beans>
+
+
