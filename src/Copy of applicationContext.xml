@@ -5,10 +5,13 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-   http://www.springframework.org/schema/aop 
+   http:p//www.springframework.org/schema/aop 
    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
    http://www.springframework.org/schema/context
    http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+   <!-- 
+     第一天
+    -->
 	<!-- IOC开始 -->
 	<!-- 定义一个对象bean -->
 	<!-- <bean id="student" class="com.cblue.spring01.ioc.Student"></bean> -->
@@ -21,6 +24,7 @@
 	<!-- <bean id="student_factory" class="com.cblue.spring01.ioc.StudentFactoryMethod"></bean> 
 		<bean id="student02" factory-bean="student_factory" factory-method="createStudent"></bean> -->
 
+
 	<!-- 创建对象是单例还是多例 -->
 	<!-- 默认单例 -->
 	<!-- <bean id="user01" class="com.cblue.spring02.scope.User"></bean>
@@ -31,23 +35,24 @@
 	<!-- <bean id="customer02" class="com.cblue.spring03.lazy.Customer"
 		lazy-init="true"></bean> -->
 
-
 	<!-- 对象的生命周期方法 -->
 	<!-- <bean id="computer" class="com.cblue.spring04.cyclelife.Computer" init-method="init" 
 		destroy-method="destory"></bean> -->
+		
+		
 	<!-- DI开始 -->
 	<!-- 通过setter设置属性 -->
 	<!-- <bean id="person01" class="com.cblue.spring05.di.Person">
 		<property name="name" value="zhangsan"></property>
 		<property name="age" value="20"></property>
-	</bean>  -->
+	</bean> -->
 	<!-- 通过构造函数设置 -->
 	<!-- <bean id="person02" class="com.cblue.spring05.di.Person">
 		<constructor-arg value="lisi"></constructor-arg>
 		<constructor-arg value="12"></constructor-arg>
 	</bean> -->
-	<!-- 通过spel注入数据 -->
-	<bean id="person03" class="com.cblue.spring05.di.Person">
+	<!-- 通过spel注入数据  spring3.0才有这个功能-->
+	<!-- <bean id="person03" class="com.cblue.spring05.di.Person">
 		<property name="name" value="王五"></property>
 		<property name="age" value="30"></property>
 	</bean> 
@@ -55,11 +60,10 @@
 	<bean id="person04" class="com.cblue.spring05.di.Person">
 		<property name="name" value="#{person03.name}"></property>
 		<property name="age" value="#{person03.age}"></property>
-	</bean>
+	</bean> -->
 	
-
 	<!-- 复杂对象注入 -->
-	<bean id="department" class="com.cblue.spring05.di.Department">
+	<!-- <bean id="department" class="com.cblue.spring05.di.Department">
 		<property name="did" value="01"></property>
 		<property name="dname" value="技术部"></property>
 		<property name="employee" ref="employee"></property>
@@ -86,9 +90,10 @@
 		<property name="eid" value="100"></property>
 		<property name="ename" value="张三"></property>
 	</bean>
+	 -->
 	
 	<!-- 使用di实现mvc -->
-	 <bean id="personDao" class="com.cblue.spring06.mvc.PersonDaoImpl"></bean>
+	<!--  <bean id="personDao" class="com.cblue.spring06.mvc.PersonDaoImpl"></bean>
      <bean id="personService" class="com.cblue.spring06.mvc.PersonServiceImpl">
         <property name="personDao">
           <ref bean="personDao"/>
@@ -98,18 +103,19 @@
         <property name="personService">
            <ref bean="personService"/>
         </property>
-     </bean>
+     </bean> -->
      
     <!-- 使用xml实现继承 使用parent属性 -->
-    <bean id="person" class="com.cblue.spring07.extend.Person">
+   <!--  <bean id="person" class="com.cblue.spring07.extend.Person">
       <property name="name">
         <value>zhangsan</value>
       </property>
     </bean>
-    <bean id="student" class="com.cblue.spring07.extend.Student" parent="person"></bean>
+    <bean id="student" class="com.cblue.spring07.extend.Student" parent="person"></bean> -->
     
-    
-     
+    <!-- 
+      第二天
+     -->
      <!-- 使用annotation实现di -->
      <bean id="person" class="com.cblue.spring08.annotation.di.Person"></bean>
      <bean id="student" class="com.cblue.spring08.annotation.di.Student"></bean>
@@ -126,8 +132,6 @@
        <!-- 注解自动扫描对象实现mvc -->
     <context:component-scan base-package="com.cblue.spring11.annotation.mvc"></context:component-scan>
 	
-	
-    
     <!-- 使用annotation实现继承 -->
 	<context:component-scan base-package="com.cblue.spring12.annotation.extend"></context:component-scan>
     
@@ -222,16 +226,14 @@
 	    </tx:attributes>
 	</tx:advice> -->
 	<!-- 注册事务 -->
-	<aop:config>
+	<!-- <aop:config>
 	  <aop:pointcut expression="execution(* com.cblue.spring19.tx.UserServiceImpl.*(..))" id="pointcut"/>
 	  <aop:advisor advice-ref="tx" pointcut-ref="pointcut"/>
-	</aop:config>
+	</aop:config> -->
+	
 
 
-	 
-	
-	
-	
+
 </beans>
 
 

@@ -2,6 +2,9 @@ package com.cblue.spring05.di;
 
 public class Employee {
 	
+	private int eid;
+	private String ename;
+	
 	@Override
 	public String toString() {
 		return "Employee [eid=" + eid + ", ename=" + ename + "]";
@@ -9,8 +12,7 @@ public class Employee {
 	public Employee() {
 		System.out.println("Employee init");
 	}
-	private int eid;
-	private String ename;
+	
 	public int getEid() {
 		return eid;
 	}

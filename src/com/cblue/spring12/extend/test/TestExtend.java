@@ -1,10 +1,10 @@
-package com.cblue.spring07.extend.test;
+package com.cblue.spring12.extend.test;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.cblue.spring07.extend.Student;
+import com.cblue.spring12.extend.Student;
 
 
 public class TestExtend {

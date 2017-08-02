@@ -1,4 +1,4 @@
-package com.cblue.spring07.extend;
+package com.cblue.spring12.extend;
 
 public class Person {
 

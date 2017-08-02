@@ -11,6 +11,11 @@ public class Department {
 	private  List lists; 
 	private  Map map;
 	
+	public Department() {
+		System.out.println("Department init");
+	}
+	
+	
 	public Map getMap() {
 		return map;
 	}
@@ -27,9 +32,7 @@ public class Department {
 		this.lists = lists;
 	}
 
-	public Department() {
-		System.out.println("Department init");
-	}
+	
 
 	public Employee getEmployee() {
 		return employee;

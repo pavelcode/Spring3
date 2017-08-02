@@ -11,18 +11,19 @@ public class UserDaoImpl02 extends JdbcDaoSupport implements UserDao {
 
 	public boolean save(User user) {
 		// TODO Auto-generated method stub
-//		this.getJdbcTemplate().execute("sql");
+		this.getJdbcTemplate().update("insert into user(name,pass) values(?,?)",   
+                new Object[]{user.getName(),user.getPass()}); 
 		return false;
 	}
 
-	public void update(User user) {
+	public boolean update(User user) {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
-	public void delete(User user) {
+	public boolean delete(User user) {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 	
 	public User get(User user) {
@@ -30,11 +31,15 @@ public class UserDaoImpl02 extends JdbcDaoSupport implements UserDao {
 		return null;
 	}
 
-
 	@Override
 	protected void checkDaoConfig() throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public List<User> getAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

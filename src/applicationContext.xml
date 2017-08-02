@@ -13,10 +13,18 @@
    http://www.springframework.org/schema/context
    http://www.springframework.org/schema/context/spring-context-3.2.xsd">
    
-    <!-- annotation实现AOP-->
-	 <context:component-scan base-package="com.cblue.spring16.annotation.aop"></context:component-scan>
-	 <!-- 切面自动代理 -->
-	 <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+   
+    <!-- 集成JDBCTemplate -->
+	<bean id="userDao" class="com.cblue.spring17.jdbc.UserDaoImpl02">
+	   <property name="dataSource">
+	       <ref bean="dataSource"/>
+	    </property>
+	</bean>
+	<bean id="userService" class="com.cblue.spring17.jdbc.UserServiceImpl">
+	    <property name="userDao">
+	       <ref bean="userDao"/>
+	    </property>
+	</bean>
 	 
 	
 	<!-- 引用数据源配置文件 -->

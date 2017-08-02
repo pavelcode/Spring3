@@ -15,7 +15,7 @@ public class Computer {
 	}
 	
 	@PreDestroy
-	public void destory(){
+	public void destroy(){
 		System.out.println("computer desctory");
 	}
 
