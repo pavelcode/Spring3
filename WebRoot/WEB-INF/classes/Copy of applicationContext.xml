@@ -3,10 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-   http:p//www.springframework.org/schema/aop 
+   http://www.springframework.org/schema/aop 
    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+   http://www.springframework.org/schema/tx 
+   http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
    http://www.springframework.org/schema/context
    http://www.springframework.org/schema/context/spring-context-3.2.xsd">
    <!-- 
@@ -14,15 +17,19 @@
     -->
 	<!-- IOC开始 -->
 	<!-- 定义一个对象bean -->
+	<!-- 
+	   id 代表类的唯一表示，命名规范为：类的首字母小写
+	   class 代表类的全路径
+	 -->
 	<!-- <bean id="student" class="com.cblue.spring01.ioc.Student"></bean> -->
 	<!-- 定义一个对象的别名 -->
 	<!-- <alias name="student" alias="mystudent"/> -->
 	<!-- 定义一个工厂静态方法 -->
-	<!-- <bean id="student_factory_staticmethod" class="com.cblue.spring01.ioc.StudentFactoryStaticMethod" 
+	<!-- <bean id="student02" class="com.cblue.spring01.ioc.StudentFactoryStaticMethod" 
 		factory-method="getInstance"></bean> -->
 	<!-- 定义一个工厂普通方法 -->
 	<!-- <bean id="student_factory" class="com.cblue.spring01.ioc.StudentFactoryMethod"></bean> 
-		<bean id="student02" factory-bean="student_factory" factory-method="createStudent"></bean> -->
+		<bean id="student03" factory-bean="student_factory" factory-method="createStudent"></bean> -->
 
 
 	<!-- 创建对象是单例还是多例 -->
@@ -30,10 +37,12 @@
 	<!-- <bean id="user01" class="com.cblue.spring02.scope.User"></bean>
 	<bean id="user02" class="com.cblue.spring02.scope.User" scope="prototype"></bean> -->
 
-	<!-- 对象创建是否懒初始化 -->
+
+	<!-- 对象是否延迟初始化 -->
 	<!-- <bean id="customer01" class="com.cblue.spring03.lazy.Customer"></bean> -->
-	<!-- <bean id="customer02" class="com.cblue.spring03.lazy.Customer"
-		lazy-init="true"></bean> -->
+	<!-- <bean id="customer02" class="com.cblue.spring03.lazy.Customer" lazy-init="true"></bean> -->	
+	<!-- <bean id="customer03" class="com.cblue.spring03.lazy.Customer" scope="prototype"></bean> -->
+	
 
 	<!-- 对象的生命周期方法 -->
 	<!-- <bean id="computer" class="com.cblue.spring04.cyclelife.Computer" init-method="init" 
@@ -91,6 +100,13 @@
 		<property name="ename" value="张三"></property>
 	</bean>
 	 -->
+	 
+	<!-- 面向接口的编程 -->
+	<bean id="excelDocument" class="com.cblue.spring06.document.ExcelDocument"></bean> 
+	<bean id="wordDoucment" class="com.cblue.spring06.document.WordDocumnet"></bean>
+	<bean id="documentManager" class="com.cblue.spring06.document.DocumentManager">
+	   <property name="wordDoucment" ref="wordDoucment"></property>
+	</bean>
 	
 	<!-- 使用di实现mvc -->
 	<!--  <bean id="personDao" class="com.cblue.spring06.mvc.PersonDaoImpl"></bean>
@@ -122,7 +138,7 @@
      <context:annotation-config></context:annotation-config>
 	
 	
-	   <!-- 使用annotation实现生命周期 -->
+	 <!-- 使用annotation实现生命周期 -->
      <bean id="computer" class="com.cblue.spring09.annotation.cyclelife.Computer"></bean>
      <context:annotation-config></context:annotation-config>
      
@@ -160,8 +176,9 @@
 	 <bean id="personDao" class="com.cblue.spring15.aop.advice.PersonDaoImpl"></bean>
 	 <bean id="transaction" class="com.cblue.spring15.aop.advice.Transaction"></bean>
    <aop:config>
+       <!-- 注意：这里一行就结束了 -->
 	   <aop:pointcut expression="execution(* com.cblue.spring15.aop.advice.*.*(..))" id="pointcut"/>
-	   <!-- ref指向切点 -->
+	   <!-- 定义切面 ref指向切面 -->
 	   <aop:aspect ref="transaction">
 	     <!--  前置通知 -->
 	      <aop:before method="beginTransaction" pointcut-ref="pointcut"/>
@@ -182,19 +199,10 @@
 	 <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	 
 	 
-	 <!-- 集成JDBCTemplate -->
-	<bean id="userDao" class="com.cblue.spring17.jdbc.UserDaoImpl">
-	   <property name="dataSource">
-	       <ref bean="dataSource"/>
-	    </property>
-	</bean>
-	<bean id="userService" class="com.cblue.spring17.jdbc.UserServiceImpl">
-	    <property name="userDao">
-	       <ref bean="userDao"/>
-	    </property>
-	</bean>
-	
-	
+	 <!-- 集成JDBCTemplate
+	    看其他配置文件
+	  -->
+     
 	<!-- 声明式事务 -->
 	<bean id="userDao" class="com.cblue.spring19.tx.UserDaoImpl">
 	   <property name="dataSource">
@@ -207,29 +215,32 @@
 	    </property>
 	</bean>
 	<!-- 注册事务管理器 -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <!-- 	
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	   <property name="dataSource">
 	     <ref bean="dataSource"/>
 	   </property>
-	</bean>
+	</bean> -->
 	<!-- 声明事务策略 -->
-	<!-- <tx:advice id="tx" transaction-manager="transactionManager">
-	    <tx:attributes>
-	         
-	          name=目标方法，save*以save开头的方法
-	          isolation="DEFAULT"  隔离属性  解决脏读，幻读
-	          propagation="REQUIRED" 传播属性  解决事务嵌套问题
-	          当不同service的方法，在同一个方法中被调用的时候，会出现事务嵌套。这时候，先调用里面每个方法的事务，在调用本方法事务
-	          read-only true 只读事务，只能读   false读写事务
-	         
-	        <tx:method name="sav*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
-	    </tx:attributes>
+	<!--<tx:advice id="tx" transaction-manager="transactionManager">
+		    <tx:attributes>
+		         
+		          name=目标方法，save*以save开头的方法
+		          isolation="DEFAULT"  隔离属性  解决脏读，幻读
+		          propagation="REQUIRED" 传播属性  解决事务嵌套问题
+		          当不同service的方法，在同一个方法中被调用的时候，会出现事务嵌套。这时候，先调用里面每个方法的事务，在调用本方法事务
+		          read-only true 只读事务，只能读   false读写事务
+		         
+		        <tx:method name="sav*" isolation="DEFAULT" propagation="REQUIRED" read-only="false"/>
+		    </tx:attributes>
 	</tx:advice> -->
-	<!-- 注册事务 -->
+	<!-- 注册事务 aop:pointcut必须是单标签-->
 	<!-- <aop:config>
 	  <aop:pointcut expression="execution(* com.cblue.spring19.tx.UserServiceImpl.*(..))" id="pointcut"/>
+	    advisor -- advice 通知
 	  <aop:advisor advice-ref="tx" pointcut-ref="pointcut"/>
-	</aop:config> -->
+	</aop:config>
+	-->
 	
 
 

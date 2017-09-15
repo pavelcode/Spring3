@@ -29,7 +29,7 @@ public class TestIOC {
 	@Test
 	public void testObjByStaticFactory(){
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		Student student = (Student)context.getBean("student_factory_staticmethod");
+		Student student = (Student)context.getBean("student02");
 		student.study();
 	}
 	

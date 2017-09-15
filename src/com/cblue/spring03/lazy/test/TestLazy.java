@@ -13,8 +13,7 @@ public class TestLazy {
 	public void immediateInitObj(){
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		System.out.println("---");
-		Customer customer = (Customer)context.getBean("customer01");
-		
+		Customer customer = (Customer)context.getBean("customer01");	
 	}
 	
 	//只有使用到类的方法的时候，才初始化类
@@ -23,7 +22,18 @@ public class TestLazy {
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		System.out.println("---");
 		Customer customer = (Customer)context.getBean("customer02");
-	    customer.toString();
-		
+	    customer.toString();	
 	}
+	
+	/*
+	 * scope与lazy-init的结合
+	 * 当scope的为prototype的时候，默认的框架启动初始化就会失效，这时候就有访问到这个类的时候，才会初始化
+	 */
+		@Test
+		public void prototypeAndLazyObj(){
+			ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+			System.out.println("---");
+			Customer customer = (Customer)context.getBean("customer03");
+		    customer.toString();	
+		}
 }

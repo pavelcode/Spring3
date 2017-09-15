@@ -29,7 +29,8 @@ public class UserDaoImpl extends JdbcTemplate implements UserDao {
 	
 	public User get(User user) {
 		// TODO Auto-generated method stub
-		User user1 = this.queryForObject("select * from user where name=? and pass=?",new Object[]{user.getName(),user.getPass()},new BeanPropertyRowMapper<User>(User.class));
+		User user1 = this.queryForObject("select * from user where name=? and pass=?",
+				new Object[]{user.getName(),user.getPass()},new BeanPropertyRowMapper<User>(User.class));
 		return  user1;
 	}  
 	

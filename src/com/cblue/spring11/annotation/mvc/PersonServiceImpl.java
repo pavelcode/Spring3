@@ -8,14 +8,6 @@ import org.springframework.stereotype.Service;
 public class PersonServiceImpl implements PersonService {
 	@Resource(name="personDao")
 	private PersonDao personDao;
-	
-	public PersonDao getPersonDao() {
-		return personDao;
-	}
-
-	public void setPersonDao(PersonDao personDao) {
-		this.personDao = personDao;
-	}
 
 	public void savePerson() {
 		// TODO Auto-generated method stub
